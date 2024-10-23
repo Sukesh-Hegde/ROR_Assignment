@@ -1,7 +1,6 @@
 import express from "express";
 import { body, validationResult } from "express-validator";
 import User from "../models/User.js";
-import fetchuser from "../middleware/fetchuser.js";
 const authRouter = express.Router();
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -125,16 +124,5 @@ authRouter.post(
   }
 );
 
-// ROUTE 3: Get loggedin User Details using: POST "/api/auth/getuser". Login required
-authRouter.post("/getuser", fetchuser, async (req, res) => {
-  try {
-    const userID = req.userID;
-    const user = await User.findById(userID).select("-password");
-    res.send(user);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Internal Server Error");
-  }
-});
 
 export default authRouter;
