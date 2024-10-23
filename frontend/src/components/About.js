@@ -10,13 +10,17 @@ export default function About() {
 
       <main className="container my-5">
         <section className="mb-5">
-          <h2>Note-Keeper</h2>
+          <h2>Rating App</h2>
           <p>
-            The Note-Keeper is a full-stack web application designed to provide
-            users with a secure and convenient way to manage their notes. Built
-            using the MERN stack (MongoDB, Express.js, React, Node.js), this
-            application allows users to create, update, delete, and share notes
-            with ease.
+            This project is a React-based Store Rating Application that allows
+            users to browse through a list of stores, view store details such as
+            name, address, and average rating, and submit their own ratings. The
+            interface is designed with a modern and responsive UI using CSS and
+            features store images, a clean card layout, and a star rating
+            system. Users can rate each store, and the application dynamically
+            updates the ratings for a seamless user experience. This project is
+            ideal for building a store review platform with a visually
+            appealing, user-friendly design.
           </p>
         </section>
 
@@ -60,7 +64,8 @@ export default function About() {
             to hear from you!
           </p>
           <p>
-            Email: <a href="mailto:info@example.com">sukeshhegde994591@gmail.com</a>
+            Email:{" "}
+            <a href="mailto:info@example.com">sukeshhegde994591@gmail.com</a>
           </p>
           <p>Phone: (123) 456-7890</p>
         </section>
