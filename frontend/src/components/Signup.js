@@ -1,78 +1,122 @@
-import React, { useState } from "react";
-import { signup } from "../services/auth";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NoteContext from "../context/notes/noteContext";
 
-function Signup() {
-  const [formData, setFormData] = useState({
+const Signup = () => {
+  const host = process.env.REACT_APP_BACKEND_URL;
+
+  const context = useContext(NoteContext);
+  const { showAlert } = context;
+
+  const [credential, setCredentials] = useState({
     name: "",
     email: "",
     password: "",
-    address: "",
+    cpassword: "",
   });
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await signup(
-        formData.name,
-        formData.email,
-        formData.password,
-        formData.address
-      );
-      alert("Signup successful!");
+    const { name, email, password } = credential;
+
+    const response = await fetch(`${host}/api/auth/createuser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
+    });
+    const json = await response.json();
+
+    if (json.success) {
+      localStorage.setItem("token", json.token);
+
       navigate("/login");
-    } catch (err) {
-      console.error(err);
-      alert("Signup failed!");
+      showAlert("Account Created Successfully", "success");
+    } else {
+      showAlert("Invalid credential", "danger");
     }
   };
 
+  const onChange = (e) => {
+    setCredentials({ ...credential, [e.target.name]: e.target.value });
+  };
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className="container">
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          required
-          minLength="5"
-          maxLength="60"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-          minLength="8"
-          maxLength="16"
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          onChange={handleChange}
-          required
-          maxLength="400"
-        />
-        <button type="submit">Sign Up</button>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            aria-describedby="emailHelp"
+            onChange={onChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email address
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+            onChange={onChange}
+            name="email"
+          />
+          <div id="emailHelp" className="form-text">
+            We'll never share your email with anyone else.
+          </div>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            onChange={onChange}
+            name="password"
+            required
+            minLength={5}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="cpassword"
+            onChange={onChange}
+            name="cpassword"
+            required
+            minLength={5}
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onSubmit={handleSubmit}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default Signup;

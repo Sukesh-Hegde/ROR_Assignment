@@ -1,0 +1,53 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.star-rating {
+  font-size: 2rem;
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+.star-rating span {
+  color: #ccc;
+}
+
+.star-rating span.filled {
+  color: #ffcc00;
+}
+
+.dialog-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.dialog-button.close {
+  background-color: #6c757d;
+}
+
+.dialog-button:hover {
+  background-color: #0056b3;
+}

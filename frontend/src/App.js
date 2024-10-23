@@ -1,24 +1,40 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import About from "./components/About";
+import NoteState from "./context/notes/noteState";
+import Alert from "./components/Alert";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import StoreList from "./components/StoreList";
-import AdminDashboard from "./pages/AdminDashboard";
-import StoreOwnerDashboard from "./pages/StoreOwnerDashboard";
 
 function App() {
+
+
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path="/" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/stores" element={<StoreList />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/owner-dashboard" element={<StoreOwnerDashboard />} />
-        </Routes>
-      </div>
-    </Router>
+    <>
+      <NoteState>
+        <Router>
+          <Navbar />
+          <Alert  />
+          <div className="container">
+            <Routes>
+              <Route exact path="/" element={<Home  />} />
+              <Route path="/about" element={<About />} />
+              <Route
+                exact
+                path="/login"
+                element={<Login  />}
+              />
+              <Route
+                path="/signup"
+                element={<Signup />}
+              />
+            </Routes>
+          </div>
+        </Router>
+      </NoteState>
+    </>
   );
 }
 
